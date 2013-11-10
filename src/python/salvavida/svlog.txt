@@ -1,0 +1,18 @@
+DEBUG:oauthlib:Collected params: [(u'oauth_nonce', u'8193369813359802751384041267'), (u'oauth_timestamp', u'1384041267'), (u'oauth_consumer_key', u'o5xBI355LBaCsgTsYm52GQ'), (u'oauth_signature_method', u'HMAC-SHA1'), (u'oauth_version', u'1.0'), (u'oauth_token', u'2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz'), (u'track', u'Johnny Football,RescuePH')]
+DEBUG:oauthlib:Normalized params: oauth_consumer_key=o5xBI355LBaCsgTsYm52GQ&oauth_nonce=8193369813359802751384041267&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1384041267&oauth_token=2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz&oauth_version=1.0&track=Johnny%20Football%2CRescuePH
+DEBUG:oauthlib:Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+DEBUG:oauthlib:Base signing string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&oauth_consumer_key%3Do5xBI355LBaCsgTsYm52GQ%26oauth_nonce%3D8193369813359802751384041267%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1384041267%26oauth_token%3D2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz%26oauth_version%3D1.0%26track%3DJohnny%2520Football%252CRescuePH
+DEBUG:oauthlib:Signature: UbzuO0/SAZpPF3aUtxWgNPO4vDM=
+DEBUG:oauthlib:Encoding URI, headers and body to utf-8.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): stream.twitter.com
+DEBUG:requests.packages.urllib3.connectionpool:Setting read timeout to <object object at 0x10a0c0110>
+DEBUG:requests.packages.urllib3.connectionpool:"POST /1.1/statuses/filter.json HTTP/1.1" 200 None
+DEBUG:oauthlib:Collected params: [(u'oauth_nonce', u'71303529190690633011384041281'), (u'oauth_timestamp', u'1384041281'), (u'oauth_consumer_key', u'o5xBI355LBaCsgTsYm52GQ'), (u'oauth_signature_method', u'HMAC-SHA1'), (u'oauth_version', u'1.0'), (u'oauth_token', u'2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz'), (u'track', u'Johnny Football,RescuePH')]
+DEBUG:oauthlib:Normalized params: oauth_consumer_key=o5xBI355LBaCsgTsYm52GQ&oauth_nonce=71303529190690633011384041281&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1384041281&oauth_token=2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz&oauth_version=1.0&track=Johnny%20Football%2CRescuePH
+DEBUG:oauthlib:Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+DEBUG:oauthlib:Base signing string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&oauth_consumer_key%3Do5xBI355LBaCsgTsYm52GQ%26oauth_nonce%3D71303529190690633011384041281%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1384041281%26oauth_token%3D2183224800-sBxTxgRKDsatPq7NpNOXByjlvRvJyhPUiiB3Kcz%26oauth_version%3D1.0%26track%3DJohnny%2520Football%252CRescuePH
+DEBUG:oauthlib:Signature: N2a6kR/n0GttJ/eUPRls4PSyzmI=
+DEBUG:oauthlib:Encoding URI, headers and body to utf-8.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): stream.twitter.com
+DEBUG:requests.packages.urllib3.connectionpool:Setting read timeout to <object object at 0x10c313110>
+DEBUG:requests.packages.urllib3.connectionpool:"POST /1.1/statuses/filter.json HTTP/1.1" 200 None
