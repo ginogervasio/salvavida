@@ -1,0 +1,13 @@
+Salva Vida
+
+Add salvavida.cfg to your src/python/salvavida with the following contents:
+
+[twitter]
+app_key=<CONSUMER KEY>
+app_secret=<CONSUMER SECRET>
+oauth_token=<ACCESS TOKEN>
+oauth_token_secret=<ACCESS TOKEN SECRET>
+feed_tags=<KEYWORDS TO FILTER>
+
+Start the app with:
+python src/python/salvavida/rescuefeed.py
