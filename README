@@ -1,5 +1,7 @@
 Salva Vida
 
+Prerequisites: Go to dev.twitter.com and make an app to get the app keys, app secrets, oauth token and oauth token secrets
+
 Add salvavida.cfg to your src/python/salvavida with the following contents:
 
 [twitter]
