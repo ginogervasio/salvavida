@@ -1,5 +1,12 @@
 Salva Vida
 
+This is a rescue dispatch app for calamities like Typhoon Yolanda.  It reads twitter streams for sos calls and plots them on a map.  Similar in functionality to rescueph.com but filters for dupes.
+
+Example:
+
+If a person is in trouble, tweet '@SalvaVidaPH/SOS/Name/Address' and a marker will be set on the map.
+If a person is rescued, tweet '@SalvaVidaPH/Safe/Name/Address' and the marker will be removed.
+
 Prerequisites: Go to dev.twitter.com and make an app to get the app keys, app secrets, oauth token and oauth token secrets
 
 Add salvavida.cfg to your src/python/salvavida with the following contents:
@@ -20,4 +27,10 @@ python app.py
 TODO:
 - Display saved people
 - Convert from sqlite to mysql
+- Deploy to heroku/ec2
 - Daemonize rescuefeed.py
+
+Future plans:
+- Add SMS functionality
+- Add FB news feed reader/graph search stream reader
+- Add functionality for cases like - relief, injury, etc.
