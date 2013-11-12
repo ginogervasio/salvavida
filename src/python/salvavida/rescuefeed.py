@@ -56,7 +56,9 @@ class TwitterStreamer(TwythonStreamer):
     def on_success(self, data):
         if 'text' in data:
             try:
-                (_, tag, name, address) = data['text'].split('/')
+                p = data['text'].split('\\', 5)
+                p += [None] * (5 - len(p))
+                (_, tag, name, address, img_url) = p
                 result = Geocoder.geocode(address)
                 (lat, long) = result[0].coordinates
                 formatted_address = result[0].formatted_address
@@ -70,13 +72,14 @@ class TwitterStreamer(TwythonStreamer):
                         db_session.delete(feed)
                         db_session.commit()
                         new_feed = Feed(name=name.upper(),lat=lat,long=long,
-                               tag='safe',address=formatted_address)
+                               tag='safe',address=formatted_address,
+                               img_url=img_url)
                         db_session.add(new_feed)
                         db_session.commit()
                         logging.debug('Feed updated.')
                 else:
                     f = Feed(name=name.upper(),lat=lat,long=long,
-                             address=formatted_address)
+                             address=formatted_address,img_url=img_url)
                     db_session.add(f)
                     db_session.commit()
                     logging.debug('Feed created name=%s, lat=%s, long=%s.'\

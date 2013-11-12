@@ -1,7 +1,7 @@
 import json
 
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, Float, String
+from sqlalchemy import Column, DateTime, Float, Integer, String
 
 from database import Base
 
@@ -14,15 +14,17 @@ class Feed(Base):
     address = Column(String)
     timestamp = Column(DateTime)
     tag = Column(String(4))
+    img_url = Column(String)
 
     def __init__(self, name=None, lat=None, long=None, address=None,
-                 timestamp=datetime.now(), tag='sos'):
+                 timestamp=datetime.now(), tag='sos', img_url=None):
         self.name = name
         self.lat = lat
         self.long = long
         self.timestamp = timestamp
         self.tag = tag
         self.address = address
+        self.img_url = img_url
 
     def __repr__(self):
         return '(name: %r, address: %r, lat: %r, long: %r, tag: %r,'\
@@ -39,5 +41,6 @@ class Feed(Base):
             'lat': self.lat,
             'long': self.long,
             'tag': self.tag,
-            'timestamp': self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            'timestamp': self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            'img_url': self.img_url
         })

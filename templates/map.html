@@ -1,36 +1,7 @@
-<!DOCTYPE>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Salva Vida</title>
-
-    <style type="text/css">
-      body {
-        margin: 0;
-        padding: 10px 20px 20px;
-        font-family: Arial;
-        font-size: 16px;
-      }
-
-      #map-container {
-        padding: 6px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #ccc #ccc #999 #ccc;
-        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
-        width: 600px;
-      }
-
-      #map {
-        width: 600px;
-        height: 400px;
-      }
-
-    </style>
+{% extends "layout.html" %}
+{% block mapjs %}
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8gsc5Sem93nTbvlhG1VXLY3lZNaaOiEs&sensor=false">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QK-_M2rDpgZandkwonJdAmSuUMg3Vyg&sensor=false">
     </script>
     <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0.2/src/markerclusterer.js">
     </script>
@@ -44,7 +15,8 @@
           center: center,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var markers = []  
+
+        var markers = []
         var feeds = {{ feeds }};
         for(i=0; i<feeds.length; i++){
           var feed = $.parseJSON(feeds[i]);
@@ -63,8 +35,4 @@
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-  </head>
-  <body>
-    <div id="map-container"><div id="map"/></div>
-  </body>
-</html>
+{% endblock %}
