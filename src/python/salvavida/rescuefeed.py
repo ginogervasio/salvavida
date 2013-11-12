@@ -28,6 +28,7 @@ class SalvaVida():
         self.pidfile_timeout = 5
         self.feed_tags = self.config.get('twitter', 'feed_tags')
         self.reply_tags = self.config.get('twitter', 'reply_tags')
+        self.filter_tags = self.config.get('twitter', 'filter_tags')
 
     def run(self):
         """ Setup TwitterStreamer. """
@@ -38,38 +39,54 @@ class SalvaVida():
         oauth_token_secret = self.config.get('twitter', 'oauth_token_secret')
         self.stream = TwitterStreamer(app_key, app_secret, oauth_token,
             oauth_token_secret)
-        self.stream.set_tags(self.feed_tags)
-        self.stream.statuses.filter(track=self.feed_tags)
+        self.stream.set_tags(self.feed_tags, self.reply_tags)
+        self.stream.statuses.filter(track=self.filter_tags)
 
 class TwitterStreamer(TwythonStreamer):
     """ Salva Vida main class."""
 
-    def set_tags(self, feed_tags):
+    def set_tags(self, feed_tags, reply_tags):
         self.feed_tags = feed_tags
+        self.reply_tags = reply_tags
+
+    def get_feed(self, name, lat, long):
+        return Feed.query.filter(Feed.name==name, Feed.lat==lat,
+                                 Feed.long==long).first()
 
     def on_success(self, data):
         if 'text' in data:
             try:
-                if any(x.upper() in data['text'].upper()
-                    for x in self.feed_tags):
-                    (tag, name, address) = data['text'].split('/')
-                elif reply_tags in data['text']:
-                    pass
+                (_, tag, name, address) = data['text'].split('/')
                 (lat, long) = Geocoder.geocode(address)[0].coordinates
-                f = Feed(name=name,lat=lat,long=long)
-                db_session.add(f)
-                db_session.commit()
-                print Feed.query.all()
-            #        print Feed.query.filter(User.name.uppercase == 'RICK')
-            except DBAPIError as e:
-                print e
+                feed = self.get_feed(name.upper(), lat, long)
+                if feed:
+                    # Filter dupes
+                    logging.debug('Feed exists: %s' % (feed))
+                    if tag.upper() in self.reply_tags.upper():
+                        # The flask SQLAlchemy doesn't seem to have
+                        # a method for updating. Weird.
+                        db_session.delete(feed)
+                        db_session.commit()
+                        new_feed = Feed(name=name.upper(),lat=lat,long=long,
+                                        tag='safe')
+                        db_session.add(new_feed)
+                        db_session.commit()
+                        logging.debug('Feed updated.')
+                else:
+                    f = Feed(name=name.upper(),lat=lat,long=long)
+                    db_session.add(f)
+                    db_session.commit()
+                    logging.debug('Feed created name=%s, lat=%s, long=%s.' % (
+                                  name.upper(), lat, long))
             except DisconnectionError as e:
-                db_session.remove()
-                db_session.init()
-            except Exception as e:
                 print e
                 logging.error(e)
+                db_session.remove()
+                db_session.init()
+            except ValueError as e:
                 pass
+            except (DBAPIError, Exception) as e:
+                logging.error(e)
     
 
         # Want to disconnect after the first result?
