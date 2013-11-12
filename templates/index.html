@@ -52,13 +52,15 @@
             var latLng = new google.maps.LatLng(feed.lat,
                 feed.long);
             var marker = new google.maps.Marker({
-              position: latLng
+              position: latLng,
+              title: feed.name
             });
             markers.push(marker)
           }
         }
         var markerCluster = new MarkerClusterer(map, markers);
       }
+
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>

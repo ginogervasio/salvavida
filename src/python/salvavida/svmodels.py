@@ -11,26 +11,31 @@ class Feed(Base):
     name = Column(String(50))
     lat = Column(Float)
     long = Column(Float)
+    address = Column(String)
     timestamp = Column(DateTime)
     tag = Column(String(4))
 
-    def __init__(self, name=None, lat=None, long=None, 
+    def __init__(self, name=None, lat=None, long=None, address=None,
                  timestamp=datetime.now(), tag='sos'):
         self.name = name
         self.lat = lat
         self.long = long
         self.timestamp = timestamp
         self.tag = tag
+        self.address = address
 
     def __repr__(self):
-        return '(Feed name: %r, lat: %r, long: %r, tag: %r, timestamp: %r)'\
-        % (self.name, self.lat, self.long, self.tag, self.timestamp)
+        return '(name: %r, address: %r, lat: %r, long: %r, tag: %r,'\
+        'timestamp: %r)'\
+        % (self.name, self.address, self.lat, self.long, self.tag, 
+           self.timestamp)
 
     @property
     def serialize(self):
         return json.dumps({
             'id': self.id,
             'name': self.name,
+            'address': self.address,
             'lat': self.lat,
             'long': self.long,
             'tag': self.tag,

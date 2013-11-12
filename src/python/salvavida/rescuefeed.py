@@ -57,7 +57,9 @@ class TwitterStreamer(TwythonStreamer):
         if 'text' in data:
             try:
                 (_, tag, name, address) = data['text'].split('/')
-                (lat, long) = Geocoder.geocode(address)[0].coordinates
+                result = Geocoder.geocode(address)
+                (lat, long) = result[0].coordinates
+                formatted_address = result[0].formatted_address
                 feed = self.get_feed(name.upper(), lat, long)
                 if feed:
                     # Filter dupes
@@ -68,16 +70,18 @@ class TwitterStreamer(TwythonStreamer):
                         db_session.delete(feed)
                         db_session.commit()
                         new_feed = Feed(name=name.upper(),lat=lat,long=long,
-                                        tag='safe')
+                               tag='safe',address=formatted_address)
                         db_session.add(new_feed)
                         db_session.commit()
                         logging.debug('Feed updated.')
                 else:
-                    f = Feed(name=name.upper(),lat=lat,long=long)
+                    f = Feed(name=name.upper(),lat=lat,long=long,
+                             address=formatted_address)
                     db_session.add(f)
                     db_session.commit()
-                    logging.debug('Feed created name=%s, lat=%s, long=%s.' % (
-                                  name.upper(), lat, long))
+                    logging.debug('Feed created name=%s, lat=%s, long=%s.'\
+                       'address=%s' % (name.upper(), lat, long, 
+                       formatted_address))
             except DisconnectionError as e:
                 print e
                 logging.error(e)

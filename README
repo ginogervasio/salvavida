@@ -11,5 +11,13 @@ oauth_token=<ACCESS TOKEN>
 oauth_token_secret=<ACCESS TOKEN SECRET>
 feed_tags=<KEYWORDS TO FILTER>
 
-Start the app with:
+Start the twitter streamer with:
 python src/python/salvavida/rescuefeed.py
+
+Start the flask app with:
+python app.py
+
+TODO:
+- Display saved people
+- Convert from sqlite to mysql
+- Daemonize rescuefeed.py
