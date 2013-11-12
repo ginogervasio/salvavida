@@ -1,6 +1,6 @@
-Salva Vida
+Salva Vida - Python + Flask + Twython + Twitter + Google Maps Rescue Dispatch App
 
-This is a rescue dispatch app for calamities like Typhoon Yolanda.  It reads twitter streams for sos calls and plots them on a map.  Similar in functionality to rescueph.com but filters for dupes.
+This is a rescue dispatch app for calamities like Typhoon Yolanda.  It reads twitter streams for sos calls and plots them on a map.  Similar in functionality to rescueph.com but filters for dupes and saves.
 
 Example:
 
