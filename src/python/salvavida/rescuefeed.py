@@ -2,7 +2,8 @@ import logging
 
 import config
 
-from daemon import runner
+from datetime import datetime
+
 from pygeocoder import Geocoder
 from sqlalchemy.exc import DBAPIError, DisconnectionError
 from twython import TwythonStreamer
@@ -49,42 +50,33 @@ class TwitterStreamer(TwythonStreamer):
         self.feed_tags = feed_tags
         self.reply_tags = reply_tags
 
-    def get_feed(self, name, lat, long):
+    def get_feed(self, name, lat, lng, state='open'):
         return Feed.query.filter(Feed.name==name, Feed.lat==lat,
-                                 Feed.long==long).first()
+                    Feed.lng==lng, Feed.state==state).first()
 
     def on_success(self, data):
         if 'text' in data:
             try:
-                p = data['text'].split('\\', 5)
-                p += [None] * (5 - len(p))
-                (_, tag, name, address, img_url) = p
+                (_, tag, name, address) = data['text'].split('\\', 4)
                 result = Geocoder.geocode(address)
-                (lat, long) = result[0].coordinates
+                (lat, lng) = result[0].coordinates
                 formatted_address = result[0].formatted_address
-                feed = self.get_feed(name.upper(), lat, long)
+                feed = self.get_feed(name.upper(), lat, lng)
                 if feed:
                     # Filter dupes
                     logging.debug('Feed exists: %s' % (feed))
                     if tag.upper() in self.reply_tags.upper():
-                        # The flask SQLAlchemy doesn't seem to have
-                        # a method for updating. Weird.
-                        db_session.delete(feed)
+                        feed.state = 'closed'
+                        feed.last_modified = datetime.now()
+                        db_session.merge(feed)
                         db_session.commit()
-                        new_feed = Feed(name=name.upper(),lat=lat,long=long,
-                               tag='safe',address=formatted_address,
-                               img_url=img_url)
-                        db_session.add(new_feed)
-                        db_session.commit()
-                        logging.debug('Feed updated.')
+                        logging.debug('Feed updated: %s' % (feed))
                 else:
-                    f = Feed(name=name.upper(),lat=lat,long=long,
-                             address=formatted_address,img_url=img_url)
+                    f = Feed(name=name.upper(),lat=lat,
+                        lng=lng, address=formatted_address)
                     db_session.add(f)
                     db_session.commit()
-                    logging.debug('Feed created name=%s, lat=%s, long=%s.'\
-                       'address=%s' % (name.upper(), lat, long, 
-                       formatted_address))
+                    logging.debug('Feed created: %s' % (f))
             except DisconnectionError as e:
                 print e
                 logging.error(e)
@@ -109,5 +101,3 @@ if __name__ == '__main__':
         s.run()
     except KeyboardInterrupt:
         db_session.remove()
-#    sv_daemon = runner.DaemonRunner(s)
-#    sv_daemon.do_action()
