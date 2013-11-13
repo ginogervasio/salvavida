@@ -1,4 +1,5 @@
 import logging
+import os
 
 import config
 
@@ -20,13 +21,9 @@ class SalvaVida():
         init_db()
         c = config.Config()
         self.config = c.cfg
-        logging.basicConfig(filename=self.config.get('salvavida', 'logfile'),
-            level=logging.DEBUG)
-        self.stdin_path = '/dev/null'
-        self.stdout_path = self.config.get('salvavida', 'logfile')
-        self.stderr_path = self.config.get('salvavida', 'errfile')
-        self.pidfile_path = self.config.get('salvavida', 'pidfile')
-        self.pidfile_timeout = 5
+        if os.getenv('HEROKU') is None:
+            logging.basicConfig(filename=self.config.get('salvavida', 
+                'logfile'), level=logging.DEBUG)
         self.feed_tags = self.config.get('twitter', 'feed_tags')
         self.reply_tags = self.config.get('twitter', 'reply_tags')
         self.filter_tags = self.config.get('twitter', 'filter_tags')
