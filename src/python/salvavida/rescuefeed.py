@@ -77,7 +77,7 @@ class TwitterStreamer(TwythonStreamer):
             except (SQLAlchemyError, DatabaseError) as e:
                 logging.error(e)
                 db_session.remove()
-                db_session.init()
+                init_db()
             except ValueError as e:
                 pass
             except (DBAPIError, Exception) as e:
