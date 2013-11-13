@@ -6,7 +6,7 @@ import config
 from datetime import datetime
 
 from pygeocoder import Geocoder
-from sqlalchemy.exc import DBAPIError, DisconnectionError
+from sqlalchemy.exc import DatabaseError, DBAPIError, SQLAlchemyError
 from twython import TwythonStreamer
 
 from database import db_session, init_db
@@ -74,8 +74,7 @@ class TwitterStreamer(TwythonStreamer):
                     db_session.add(f)
                     db_session.commit()
                     logging.debug('Feed created: %s' % (f))
-            except DisconnectionError as e:
-                print e
+            except (SQLAlchemyError, DatabaseError) as e:
                 logging.error(e)
                 db_session.remove()
                 db_session.init()
