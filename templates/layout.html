@@ -2,36 +2,56 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Salva Vida</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalvaVida</title>
+    <link href="{{ url_for('static', filename='jumbotron-narrow.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
     <style type="text/css">
       body {
         margin: 0;
         padding: 10px 20px 20px;
-        font-family: Arial;
-        font-size: 16px;
-      }
-
-      #map-container {
-        padding: 6px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #ccc #ccc #999 #ccc;
-        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
-        width: 600px;
       }
 
       #map {
-        width: 600px;
-        height: 400px;
+        margin: auto;
+        width: 80%;
+        height: 60%;
+      }
+      
+      #textbox {
+         margin: auto;
+         text-align: center;
+         position: float;
       }
 
     </style>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     {% block mapjs %}
     {% endblock mapjs %}
 </head>
 <body>
-    <div id="map-container"><div id="map"/></div>
+    <div id="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="http://github.com/ginogervasio/salvavida">Contribute</a></li>
+        </ul>
+        <h3 class="text-muted">SalvaVida</h3>
+      </div>
+      <div id="map"/></div>
+      <div id="textbox" class="row marketing">
+        <div class="col-lg-6">
+          <h4>If someone needs help:</h4>
+          <p>tweet @SalvaVidaPH\sos\name\address</p>
+
+          <h4>If someone is safe or rescued:</h4>
+          <p>tweet @SalvaVidaPH\safe\name\address</p>
+        </div>
+      </div>
+      <div class="footer">
+        <p class="text-muted">Contribute to <a href="http://github.com/ginogervasio/salvavida">SalvaVida</a>.</p>
+      </div>
+    </div>
 </body>
 </html>
