@@ -1,3 +1,5 @@
+import os
+
 import ConfigParser
 
 class Config(object):
@@ -9,5 +11,5 @@ class Config(object):
     def read_config(self):
         """Return config object from config file"""
         self.cfg = ConfigParser.ConfigParser()
-        self.cfg.read('salvavida.cfg')
+        self.cfg.read(os.path.join(os.getenv('CONFROOT'), 'salvavida.cfg'))
 

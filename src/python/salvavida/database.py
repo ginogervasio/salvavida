@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 config = config.Config().cfg
 DATABASE_URI = config.get('db', 'uri')
-engine = create_engine(DATABASE_URI, convert_unicode=True)
+engine = create_engine(DATABASE_URI, convert_unicode=True, echo='debug')
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
