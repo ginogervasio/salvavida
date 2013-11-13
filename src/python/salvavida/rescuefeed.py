@@ -9,7 +9,7 @@ from pygeocoder import Geocoder
 from sqlalchemy.exc import DatabaseError, DBAPIError, SQLAlchemyError
 from twython import TwythonStreamer
 
-from database import db_session, init_db
+from database import get_session, init_db
 from svmodels import Feed
 
 class SalvaVida():
@@ -52,6 +52,7 @@ class TwitterStreamer(TwythonStreamer):
                     Feed.lng==lng, Feed.state==state).first()
 
     def on_success(self, data):
+        db_session = get_session()
         if 'text' in data:
             try:
                 (_, tag, name, address) = data['text'].split('\\', 4)
@@ -76,12 +77,12 @@ class TwitterStreamer(TwythonStreamer):
                     logging.debug('Feed created: %s' % (f))
             except (SQLAlchemyError, DatabaseError) as e:
                 logging.error(e)
-                db_session.remove()
-                init_db()
             except ValueError as e:
                 pass
             except (DBAPIError, Exception) as e:
                 logging.error(e)
+            finally:
+                db_session.remove()
     
 
         # Want to disconnect after the first result?
@@ -93,7 +94,4 @@ class TwitterStreamer(TwythonStreamer):
 
 if __name__ == '__main__':
     s = SalvaVida()
-    try:
-        s.run()
-    except KeyboardInterrupt:
-        db_session.remove()
+    s.run()
