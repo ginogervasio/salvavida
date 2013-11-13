@@ -89,7 +89,7 @@ class TwitterStreamer(TwythonStreamer):
         # self.disconnect()
 
     def on_error(self, status_code, data):
-        logging.error(status_code, data)
+        logging.error('%s - %s' % (status_code, data))
 
 
 if __name__ == '__main__':
