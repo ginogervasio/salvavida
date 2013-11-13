@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    feeds = [i.serialize for i in Feed.query.filter(Feed.state=='sos').all()]
+    feeds = [i.serialize for i in Feed.query.filter(Feed.state=='open').all()]
     return render_template('map.html', feeds=Markup(feeds))
 
 @app.route("/sos", methods=["POST"])
