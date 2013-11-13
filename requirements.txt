@@ -8,6 +8,7 @@ Werkzeug==0.9.4
 gunicorn==18.0
 itsdangerous==0.23
 lockfile==0.9.1
+newrelic==2.6.0.5
 oauthlib==0.6.0
 pygeocoder==1.2.1.1
 requests==2.0.0
