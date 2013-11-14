@@ -26,7 +26,7 @@ Run the app on your local machine
 
 2. Add salvavida.cfg to your etc/ with the following contents:
 
-`` [twitter]
+` [twitter]
 app_key=<CONSUMER KEY>
 app_secret=<CONSUMER SECRET>
 oauth_token=<ACCESS TOKEN>
@@ -38,12 +38,12 @@ logfile=<LOGFILE>
 
 [db]
 uri=sqlite:////tmp/sv.db
-``
+`
 3. Start the twitter streamer with:
-``python src/python/salvavida/rescuefeed.py``
+`python src/python/salvavida/rescuefeed.py`
 
 4. Start the flask app with:
-``python app.py``
+`python app.py`
 
 Future plans
 -------------
