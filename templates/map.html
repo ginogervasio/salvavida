@@ -29,5 +29,8 @@
       }
 
       google.maps.event.addDomListener(window, 'load', initialize);
+      setTimeout(function(){
+          window.location.reload();
+      }, 60000);
     </script>
 {% endblock %}
