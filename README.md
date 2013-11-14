@@ -41,6 +41,9 @@ uri=sqlite:////tmp/sv.db
 
 ```
 
+* Install the dependencies:
+` pip install -r requirements.txt `
+
 * Start the twitter streamer with:
 ` python src/python/salvavida/rescuefeed.py `
 
