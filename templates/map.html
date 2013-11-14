@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block mapjs %}
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QK-_M2rDpgZandkwonJdAmSuUMg3Vyg&sensor=false">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QK-_M2rDpgZandkwonJdAmSuUMg3Vyg&sensor=false">
     </script>
     <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0.2/src/markerclusterer.js">
     </script>
@@ -19,19 +18,19 @@
         var feeds = {{ feeds }};
         for(i=0; i<feeds.length; i++){
           var feed = $.parseJSON(feeds[i]);
-            if(feed.tag == 'sos'){
-            var latLng = new google.maps.LatLng(feed.lat,
-                feed.long);
-            var marker = new google.maps.Marker({
+          var latLng = new google.maps.LatLng(feed.lat, feed.lng);
+          var marker = new google.maps.Marker({
               position: latLng,
               title: feed.name
-            });
-            markers.push(marker)
-          }
+          });
+          markers.push(marker)
         }
         var markerCluster = new MarkerClusterer(map, markers);
       }
 
       google.maps.event.addDomListener(window, 'load', initialize);
+      setTimeout(function(){
+          window.location.reload();
+      }, 60000);
     </script>
 {% endblock %}

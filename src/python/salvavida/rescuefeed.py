@@ -1,11 +1,12 @@
 import logging
+import os
 
 import config
 
 from datetime import datetime
 
 from pygeocoder import Geocoder
-from sqlalchemy.exc import DBAPIError, DisconnectionError
+from sqlalchemy.exc import DatabaseError, DBAPIError, SQLAlchemyError
 from twython import TwythonStreamer
 
 from database import db_session, init_db
@@ -20,13 +21,9 @@ class SalvaVida():
         init_db()
         c = config.Config()
         self.config = c.cfg
-        logging.basicConfig(filename=self.config.get('salvavida', 'logfile'),
-            level=logging.DEBUG)
-        self.stdin_path = '/dev/null'
-        self.stdout_path = self.config.get('salvavida', 'logfile')
-        self.stderr_path = self.config.get('salvavida', 'errfile')
-        self.pidfile_path = self.config.get('salvavida', 'pidfile')
-        self.pidfile_timeout = 5
+        if os.getenv('HEROKU') is None:
+            logging.basicConfig(filename=self.config.get('salvavida', 
+                'logfile'), level=logging.DEBUG)
         self.feed_tags = self.config.get('twitter', 'feed_tags')
         self.reply_tags = self.config.get('twitter', 'reply_tags')
         self.filter_tags = self.config.get('twitter', 'filter_tags')
@@ -77,27 +74,23 @@ class TwitterStreamer(TwythonStreamer):
                     db_session.add(f)
                     db_session.commit()
                     logging.debug('Feed created: %s' % (f))
-            except DisconnectionError as e:
-                print e
+            except (SQLAlchemyError, DatabaseError) as e:
                 logging.error(e)
-                db_session.remove()
-                db_session.init()
             except ValueError as e:
                 pass
             except (DBAPIError, Exception) as e:
                 logging.error(e)
+            finally:
+                db_session.remove()
     
 
         # Want to disconnect after the first result?
         # self.disconnect()
 
     def on_error(self, status_code, data):
-        logging.error(status_code, data)
+        logging.error('%s - %s' % (status_code, data))
 
 
 if __name__ == '__main__':
     s = SalvaVida()
-    try:
-        s.run()
-    except KeyboardInterrupt:
-        db_session.remove()
+    s.run()

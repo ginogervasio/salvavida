@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 config = config.Config().cfg
 DATABASE_URI = config.get('db', 'uri')
-engine = create_engine(DATABASE_URI, convert_unicode=True, echo='debug')
+engine = create_engine(DATABASE_URI, convert_unicode=True, pool_size=10)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
@@ -17,4 +17,3 @@ Base.query = db_session.query_property()
 def init_db():
     import svmodels
     Base.metadata.create_all(bind=engine)
-    
