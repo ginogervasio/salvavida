@@ -36,7 +36,8 @@ def sos():
                 'id': new_feed.id,
                 'lat': new_feed.lat,
                 'lng': new_feed.lng,
-                'createdAt':new_feed.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                'createdAt':
+                    new_feed.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'name': new_feed.name,
                 'description': new_feed.description,
                 'state': new_feed.state
@@ -68,7 +69,7 @@ def rescue():
                 'lat': feed.lat,
                 'lng': feed.lng,
                 'lastModified': 
-                    feed.last_modified.strftime("%Y-%m-%d %H:%M:%S"),
+                    feed.last_modified.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'name': feed.name,
                 'description': feed.description,
                 'state': feed.state
@@ -86,7 +87,7 @@ def rescue():
 
 @app.route("/rescues", methods=["GET"])
 def rescues():
-    ts = datetime.strptime(request.args.get('since'), '%Y-%m-%d %H:%M:%S')
+    ts = datetime.strptime(request.args.get('since'), '%Y-%m-%dT%H:%M:%SZ')
     feeds = Feed.query.filter(Feed.state=='closed',
                 Feed.last_modified>=ts).all()
     result = []
@@ -96,9 +97,9 @@ def rescues():
                 'id': feed.id,
                 'lat': feed.lat,
                 'lng': feed.lng,
-                'createdAt': feed.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                'createdAt': feed.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'lastModified':
-                    feed.last_modified.strftime("%Y-%m-%d %H:%M:%S"),
+                    feed.last_modified.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'name': feed.name,
                 'description': feed.description,
                 'state': feed.state
