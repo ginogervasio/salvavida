@@ -1,15 +1,14 @@
 SalvaVida
 ===========
 
-A Python + Flask + Twython + Twitter + Google Maps + Twilio (Soon) Rescue Dispatch App
--------------------------------------------------------------------------------
+**A Python + Flask + Twython + Twitter + Google Maps + Twilio (Soon) Rescue Dispatch App**
 
 This is a rescue dispatch app for calamities like Typhoon Yolanda.  It reads twitter streams for sos calls and plots them on a map.  Similar in functionality to [rescueph.com](http://rescueph.com) but filters for dupes and saves.
 
 This is intended for the National Disaster Risk Reduction Council who want to know which areas need the most urgent attention.  The map displays clusters of markers.  Larger clusters mean more people need help in that area.
 
-How to use:
------------
+How it works
+-------------
 
 If a person is in trouble, tweet '@SalvaVidaPH\sos\Name\Address' and a marker will be set on the map.
 
@@ -52,3 +51,28 @@ Future plans
 -------------
 - Add SMS functionality
 - Add FB news feed reader/graph search stream reader
+
+License
+-------
+
+The MIT License (MIT)
+
+Copyright (c) 2013 Gino Gervasio http://salvavida.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
