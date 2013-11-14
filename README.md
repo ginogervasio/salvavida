@@ -22,12 +22,12 @@ e.g. @SalvaVidaPH\safe\Sterling Archer\2401 Taft Ave, 1004 Manila
 Run the app on your local machine
 ----------------------------------
 
-1. Go to dev.twitter.com and make an app to get the app keys, app secrets, oauth token and oauth token secrets
+* Go to dev.twitter.com and make an app to get the app keys, app secrets, oauth token and oauth token secrets
 
-2. Add salvavida.cfg to your etc/ with the following contents:
+* Add salvavida.cfg to your etc/ with the following contents:
 
 ```
- [twitter]
+[twitter]
 app_key=<CONSUMER KEY>
 app_secret=<CONSUMER SECRET>
 oauth_token=<ACCESS TOKEN>
@@ -41,10 +41,11 @@ logfile=<LOGFILE>
 uri=sqlite:////tmp/sv.db
 
 ```
-3. Start the twitter streamer with:
+
+* Start the twitter streamer with:
 ` python src/python/salvavida/rescuefeed.py `
 
-4. Start the flask app with:
+* Start the flask app with:
 ` python app.py `
 
 Future plans
