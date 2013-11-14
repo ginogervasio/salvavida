@@ -90,12 +90,16 @@ def rescue():
     
     return jsonify(result)
 
-@app.route("/rescues", methods=["GET"])
-def rescues():
+@app.route("/cases", methods=["GET"])
+def cases():
     ts = datetime.strptime(request.args.get('since'), '%Y-%m-%dT%H:%M:%SZ')
+    state = request.args.get('state')
     try:
-        feeds = Feed.query.filter(Feed.state=='closed',
-                    Feed.last_modified>=ts).all()
+        if state == 'any':
+            feeds = Feed.query.filter(Feed.created_at>=ts).all()
+        else:
+            feeds = Feed.query.filter(Feed.state==state,
+                        Feed.last_modified>=ts).all()
     finally:
         db_session.remove()
     result = []
