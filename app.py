@@ -12,7 +12,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    feeds = [i.serialize for i in Feed.query.filter(Feed.state=='open').all()]
+    try:
+        feeds = [i.serialize for i in Feed.query.filter(
+            Feed.state=='open').all()]
+    finally:
+        db_session.remove()
+    
     return render_template('map.html', feeds=Markup(feeds))
 
 @app.route("/sos", methods=["POST"])
@@ -88,8 +93,11 @@ def rescue():
 @app.route("/rescues", methods=["GET"])
 def rescues():
     ts = datetime.strptime(request.args.get('since'), '%Y-%m-%dT%H:%M:%SZ')
-    feeds = Feed.query.filter(Feed.state=='closed',
-                Feed.last_modified>=ts).all()
+    try:
+        feeds = Feed.query.filter(Feed.state=='closed',
+                    Feed.last_modified>=ts).all()
+    finally:
+        db_session.remove()
     result = []
     if feeds:
         for feed in feeds:
