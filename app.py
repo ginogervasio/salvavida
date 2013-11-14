@@ -26,20 +26,25 @@ def sos():
                              Feed.state=='open').first()
     result = None
     if not feed:
-        address = Geocoder.reverse_geocode(float(lat), float(lng))[0]
-        new_feed = Feed(name=name, lat=lat, lng=lng, address=address,
-            description=description)
-        db_session.add(new_feed)
-        db_session.commit()
-        result = {
-            'id': new_feed.id,
-            'lat': new_feed.lat,
-            'lng': new_feed.lng,
-            'createdAt': new_feed.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            'name': new_feed.name,
-            'description': new_feed.description,
-            'state': new_feed.state
-        }
+        try:
+            address = Geocoder.reverse_geocode(float(lat), float(lng))[0]
+            new_feed = Feed(name=name, lat=lat, lng=lng, address=address,
+                description=description)
+            db_session.add(new_feed)
+            db_session.commit()
+            result = {
+                'id': new_feed.id,
+                'lat': new_feed.lat,
+                'lng': new_feed.lng,
+                'createdAt':new_feed.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                'name': new_feed.name,
+                'description': new_feed.description,
+                'state': new_feed.state
+            }
+        except:
+            result = { 'error_msg': 'DB Error' }
+        finally:
+            db_session.remove()
     else:
         result = {
             'error_msg': 'Entry exists.'
@@ -72,6 +77,10 @@ def rescue():
             result = { 'error_msg': 'Entry does not exist.' }
     except ValueError:
         result = { 'error_msg': 'Invalid ID format %s' % (data.get('id')) }
+    except:
+        result = { 'error_msg': 'Internal error.' }
+    finally:
+        db_session.remove()
     
     return jsonify(result)
 

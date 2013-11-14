@@ -9,7 +9,7 @@ from pygeocoder import Geocoder
 from sqlalchemy.exc import DatabaseError, DBAPIError, SQLAlchemyError
 from twython import TwythonStreamer
 
-from database import get_session, init_db
+from database import db_session, init_db
 from svmodels import Feed
 
 class SalvaVida():
@@ -52,7 +52,6 @@ class TwitterStreamer(TwythonStreamer):
                     Feed.lng==lng, Feed.state==state).first()
 
     def on_success(self, data):
-        db_session = get_session()
         if 'text' in data:
             try:
                 (_, tag, name, address) = data['text'].split('\\', 4)
