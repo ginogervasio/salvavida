@@ -50,6 +50,10 @@ uri=sqlite:////tmp/sv.db
 * Start the flask app with:
 ` python app.py `
 
+REST API
+--------
+[Here](https://github.com/ginogervasio/salvavida/wiki/REST-API-Spec)
+
 Future plans
 -------------
 - Add SMS functionality
