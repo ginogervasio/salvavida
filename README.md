@@ -31,7 +31,9 @@ app_key=<CONSUMER KEY>
 app_secret=<CONSUMER SECRET>
 oauth_token=<ACCESS TOKEN>
 oauth_token_secret=<ACCESS TOKEN SECRET>
-feed_tags=<KEYWORDS TO FILTER>
+filter_tags=<KEYWORDS TO FILTER>
+reply_tags=safe
+feed_tags=sos
 
 [salvavida]
 logfile=<LOGFILE>
