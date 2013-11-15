@@ -1,4 +1,5 @@
 import json
+import logging
 
 from datetime import datetime
 
@@ -121,7 +122,7 @@ def cases():
 
 @app.route("/sms", methods=["POST"])
 def sms():
-    print request.data
+    logging.debug(request)
 
 if __name__ == '__main__':
     app.debug = True
