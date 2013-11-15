@@ -119,6 +119,10 @@ def cases():
     response = {'results': result}
     return jsonify(response)
 
+@app.route("/sms", methods=["POST"])
+def sms():
+    print request.data
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
