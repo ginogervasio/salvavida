@@ -120,10 +120,6 @@ def cases():
     response = {'results': result}
     return jsonify(response)
 
-@app.route("/sms", methods=["POST"])
-def sms():
-    logging.debug(request)
-
 if __name__ == '__main__':
     app.debug = True
     app.run()
